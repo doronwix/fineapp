@@ -23,6 +23,7 @@ module.exports = {
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "./dist"),
+    publicPath: "/",
   },
   resolve: {
     extensions: [".js", ".jsx"],
@@ -37,6 +38,7 @@ module.exports = {
         changeOrigin: true,
       },
     },
+    historyApiFallback: true,
   },
   plugins: [
     new CleanWebpackPlugin(),

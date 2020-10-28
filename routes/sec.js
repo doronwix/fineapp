@@ -17,7 +17,7 @@ const {
 const extrapolate = require("./calculate/extrapolate");
 const repository = require("./repository/repositoryFactory");
 const getDirName = require("path").dirname;
-const config = { log: true, fs: true, setWorker: true };
+const config = { log: true, fs: true, setWorker: false };
 repository.registerRepositry("fs");
 
 router.get("/:symbolId/:maxYear?/:numOfYears?/:docType?", function (req, res) {

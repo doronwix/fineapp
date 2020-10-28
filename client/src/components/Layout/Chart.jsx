@@ -31,7 +31,7 @@ export default function Chart(props) {
       <Title>{props.title}</Title>
       
 
-        <LineChart  width={730} height={250}
+        <LineChart  width={350} height={150}
   margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         
           data={mapDataToChart(props.data)}

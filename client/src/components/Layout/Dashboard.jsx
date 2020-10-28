@@ -26,6 +26,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    flexGrow: 1,
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -61,38 +62,19 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  drawerPaper: {
-    position: "relative",
-    whiteSpace: "nowrap",
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: "hidden",
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9),
-    },
-  },
-  appBarSpacer: theme.mixins.toolbar,
+  
+ 
   content: {
     flexGrow: 1,
-    height: "100vh",
-    overflow: "auto",
+   
+    
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing(2),
+    
     display: "flex",
     overflow: "auto",
     justifyContent: "center",
@@ -100,10 +82,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     margin: "0 auto",
   },
-  fixedHeight: { height: "30vh" },
+  fixedHeight: { height: "25vh" },
   center: {
-    margin: "auto",
-    width: "50%",
+    margin: "0 auto",
+   
     
     padding: "10px",
   }
@@ -117,9 +99,7 @@ export default function Dashboard() {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
@@ -134,7 +114,7 @@ export default function Dashboard() {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+          
             className={clsx(
               classes.menuButton,
               open && classes.menuButtonHidden
@@ -153,45 +133,35 @@ export default function Dashboard() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>{mainListItems}</List>
-      </Drawer>
+     
 
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
+        <Container className={classes.container}>
+          <Grid container direction="row" spacing={3}>
+        
             {chartsData && (
               /* Chart */
-
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper className={classes.fixedHeightPaper}>
-                  {chartsData.revenuesExtrapolated && (
-                    <Chart
-                      data={chartsData.revenuesExtrapolated}
-                      title={"Revenues"}
-                    />
-                  )}
-                  {!chartsData.revenuesExtrapolated && symbol && (
-                    <div className={classes.center}>
-                      <Spinner></Spinner>
-                    </div>
-                  )}
-                </Paper>
-
-                <Paper width="33%" height="100%">
+      <React.Fragment>
+              <Grid item xs={5} >
+                  
+                      <Paper >
+                        {chartsData.revenuesExtrapolated && (
+                          <Chart
+                            data={chartsData.revenuesExtrapolated}
+                            title={"Revenues"}
+                          />
+                        )}
+                        {!chartsData.revenuesExtrapolated && symbol && (
+                          <div className={classes.center}>
+                            <Spinner></Spinner>
+                          </div>
+                        )}
+                      </Paper>
+                
+                </Grid>
+                 <Grid item xs={5} >
+                <Paper>
                   {chartsData.revenuesExtrapolated && (
                     <Chart
                       data={chartsData.netIncomeExtrapolated}
@@ -204,8 +174,9 @@ export default function Dashboard() {
                     </div>
                   )}
                 </Paper>
-
-                <Paper width="33%" height="100%">
+                </Grid>
+                <Grid item xs={5} >
+                <Paper >
                   {chartsData.liabilities && (
                     <Chart
                       data={chartsData.liabilities}
@@ -219,16 +190,23 @@ export default function Dashboard() {
                     )}
                 </Paper>
               </Grid>
-            )}
-            {/* Recent Report */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
+                          {/* Recent Report */}
+            {secData /* Financial Details */ && (
+            <Grid item xs={3}>
+           
+              <Paper >
                 <Ratio name={"P/E"} />
               </Paper>
+                 
             </Grid>
-            {secData /* Financial Details */ && (
-              <Grid item xs={12}>
-                <Paper className={classes.paper}>
+            )}
+
+            </React.Fragment>
+            )}
+         
+         {secData /* Financial Details */ && (
+              <Grid item xs={12} >
+                <Paper >
                   <FinancialData data={secData} />
                 </Paper>
               </Grid>

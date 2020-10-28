@@ -16,7 +16,7 @@ function preventDefault(event) {
 
 const useStyles = makeStyles({
   depositContext: {
-    flex: 1,
+    flex: 2,
   },
 });
 
@@ -25,11 +25,12 @@ export default function Ratio() {
   const { rate } = useContext(rateContext);
   const { secData } = useContext(financialContext);
   var refDcf = useRef(0);
+  var expectedInterest = 0.02;
   const sum = secData
     ? secData
         .map((data, index) => data.WorkingCapital)
         .reduce((total, currentValue, index) => {
-          return total + currentValue / Math.pow(1 + 0.02, index);
+          return total + currentValue / Math.pow(1 + expectedInterest, index);
         })
     : 0;
   const sharesOutstanding = secData
@@ -48,20 +49,23 @@ export default function Ratio() {
 
   const classes = useStyles();
   return (
+   
     <React.Fragment>
+    
+      <div width={350} height={150}> 
       <Title>Current Price</Title>
-      <Typography component="p" variant="h4">
+      <Typography component="p" variant="h6">
         {rate}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         {date}
       </Typography>
       <Title>DCF Price</Title>
-      <Typography component="p" variant="h4">
+      <Typography component="p" variant="h6">
         {refDcf.toFixed(2)}
       </Typography>
       <Title>P/E</Title>
-      <Typography component="p" variant="h4">
+      <Typography component="p" variant="h6">
         {multiplePE.toFixed(2)}
       </Typography>
       <div>
@@ -69,6 +73,11 @@ export default function Ratio() {
           View balance
         </Link>
       </div>
+     
+      </div>
+     
     </React.Fragment>
+  
+    
   );
 }
