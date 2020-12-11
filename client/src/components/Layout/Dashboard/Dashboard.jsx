@@ -1,25 +1,23 @@
 import React, { useContext, useState, useRef } from "react";
-import { financialContext } from "../../providers/DataProvider";
+import { rateContext, financialContext } from "../../../providers/DataProvider";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Drawer from "@material-ui/core/Drawer";
+
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
+
 import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { mainListItems } from "./listItems";
-import Chart from "./Chart";
-import Ratio from "./Ratio";
-import FinancialData from "./FinancialData";
-import Spinner from "./Spinner";
+
+import Chart from "../Chart/Chart";
+import Ratio from "../Ratio";
+import FinancialData from "../FinancialData";
+import Spinner from "../Spinner";
 
 const drawerWidth = 240;
 
@@ -62,19 +60,15 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  
- 
+
   content: {
     flexGrow: 1,
-   
-    
   },
   container: {
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
   },
   paper: {
-    
     display: "flex",
     overflow: "auto",
     justifyContent: "center",
@@ -85,20 +79,17 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: { height: "25vh" },
   center: {
     margin: "0 auto",
-   
-    
+
     padding: "10px",
-  }
+  },
 }));
 
 export default function Dashboard() {
   const { symbol, secData, chartsData } = useContext(financialContext);
+  const { rate } = useContext(rateContext);
 
   const classes = useStyles();
   const [open, setOpen] = useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
@@ -114,7 +105,6 @@ export default function Dashboard() {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-          
             className={clsx(
               classes.menuButton,
               open && classes.menuButtonHidden
@@ -133,80 +123,77 @@ export default function Dashboard() {
           </Typography>
         </Toolbar>
       </AppBar>
-     
 
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container className={classes.container}>
           <Grid container direction="row" spacing={3}>
-        
             {chartsData && (
               /* Chart */
-      <React.Fragment>
-              <Grid item xs={5} >
-                  
-                      <Paper >
-                        {chartsData.revenuesExtrapolated && (
-                          <Chart
-                            data={chartsData.revenuesExtrapolated}
-                            title={"Revenues"}
-                          />
-                        )}
-                        {!chartsData.revenuesExtrapolated && symbol && (
-                          <div className={classes.center}>
-                            <Spinner></Spinner>
-                          </div>
-                        )}
-                      </Paper>
-                
-                </Grid>
-                 <Grid item xs={5} >
-                <Paper>
-                  {chartsData.revenuesExtrapolated && (
-                    <Chart
-                      data={chartsData.netIncomeExtrapolated}
-                      title={"NetIncomeLoss"}
-                    />
-                  )}
-                  {!chartsData.netIncomeExtrapolated && symbol && (
-                    <div className={classes.center}>
-                      <Spinner></Spinner>
-                    </div>
-                  )}
-                </Paper>
-                </Grid>
-                <Grid item xs={5} >
-                <Paper >
-                  {chartsData.liabilities && (
-                    <Chart
-                      data={chartsData.liabilities}
-                      title={"Liabilities"}
-                    />
-                  )}
-                  {!chartsData.liabilities && symbol && (                    
-                    <div className={classes.center}>
-                      <Spinner></Spinner>
-                    </div>
+              <React.Fragment>
+                <Grid item xs={5}>
+                  <Paper>
+                    {chartsData.revenuesExtrapolated && (
+                      <Chart
+                        data={chartsData.revenuesExtrapolated}
+                        title={"Revenues"}
+                      />
                     )}
-                </Paper>
-              </Grid>
-                          {/* Recent Report */}
-            {secData /* Financial Details */ && (
-            <Grid item xs={3}>
-           
-              <Paper >
-                <Ratio name={"P/E"} />
-              </Paper>
-                 
-            </Grid>
+                    {!chartsData.revenuesExtrapolated && symbol && (
+                      <div className={classes.center}>
+                        <Spinner></Spinner>
+                      </div>
+                    )}
+                  </Paper>
+                </Grid>
+                <Grid item xs={5}>
+                  <Paper>
+                    {chartsData.revenuesExtrapolated && (
+                      <Chart
+                        data={chartsData.netIncomeExtrapolated}
+                        title={"NetIncomeLoss"}
+                      />
+                    )}
+                    {!chartsData.netIncomeExtrapolated && symbol && (
+                      <div className={classes.center}>
+                        <Spinner></Spinner>
+                      </div>
+                    )}
+                  </Paper>
+                </Grid>
+                <Grid item xs={5}>
+                  <Paper>
+                    {chartsData.liabilities && (
+                      <Chart
+                        data={chartsData.liabilities}
+                        title={"Liabilities"}
+                      />
+                    )}
+                    {!chartsData.liabilities && symbol && (
+                      <div className={classes.center}>
+                        <Spinner></Spinner>
+                      </div>
+                    )}
+                  </Paper>
+                </Grid>
+                <Grid item xs={5}>
+                  <Paper>
+                    {secData && rate /* Financial Details */ && (
+                      <Ratio rates={rate} secData={secData} name={"P/E"} />
+                    )}
+                    {!rate && symbol && (
+                      <div className={classes.center}>
+                        <Spinner></Spinner>
+                      </div>
+                    )}
+                  </Paper>
+                </Grid>
+              </React.Fragment>
             )}
 
-            </React.Fragment>
-            )}
-         
-         {secData /* Financial Details */ && (
-              <Grid item xs={12} >
-                <Paper >
+            {secData /* Financial Details */ && (
+              <Grid item xs={12}>
+                <Paper>
                   <FinancialData data={secData} />
                 </Paper>
               </Grid>

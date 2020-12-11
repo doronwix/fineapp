@@ -6,7 +6,7 @@ const parseXbrl = require("parse-xbrl-10k");
 // through this event listener.
 
 parseXbrl
-  .parseStr(workerData.data)
+  .parseStr(workerData.data, workerData.symbolId)
   .then((data) => {
     //let url = response.config.url;
     parentPort.postMessage({ data, url: workerData.url });

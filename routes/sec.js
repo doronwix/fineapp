@@ -5,6 +5,7 @@ const axios = require("axios");
 const htmlExtractor = require("html-extract-js");
 const parseXbrl = require("parse-xbrl-10k");
 const utils = require("./utils");
+const rateLimit = require("axios-rate-limit");
 
 const {
   Worker,
@@ -17,8 +18,13 @@ const {
 const extrapolate = require("./calculate/extrapolate");
 const repository = require("./repository/repositoryFactory");
 const getDirName = require("path").dirname;
-const config = { log: true, fs: true, setWorker: false };
+const config = { log: true, fs: true, setWorker: true };
 repository.registerRepositry("fs");
+
+const http = rateLimit(axios.create(), {
+  maxRequests: 4,
+  perMilliseconds: 500,
+});
 
 router.get("/:symbolId/:maxYear?/:numOfYears?/:docType?", function (req, res) {
   let _currentYear = new Date().getFullYear(),
@@ -185,7 +191,7 @@ router.get("/:symbolId/:maxYear?/:numOfYears?/:docType?", function (req, res) {
     resolve,
     reject
   ) {
-    axios
+    http
       .get(
         "http://www.sec.gov/cgi-bin/browse-edgar?CIK=" +
           symbolId +
@@ -194,7 +200,7 @@ router.get("/:symbolId/:maxYear?/:numOfYears?/:docType?", function (req, res) {
       .then((response) => {
         let url = get_xk_url(response.data, year, type);
         if (url) {
-          return axios.get(url);
+          return http.get(url);
         } else {
           throw new Error("no available document" + year + "," + type);
         }
@@ -218,14 +224,18 @@ router.get("/:symbolId/:maxYear?/:numOfYears?/:docType?", function (req, res) {
           let json = JSON.parse(repository.get(result.result.name));
           return { url: result.extraData, json };
         } else {
-          return axios.get(result.extraData);
+          return http.get(result.extraData);
         }
       })
       .then((response) => {
         if (response && response.json) {
           return resolve({ url: response.url, data: response.json });
         }
-        let dataRequest = { data: response.data, url: response.config.url };
+        let dataRequest = {
+          data: response.data,
+          url: response.config.url,
+          symbolId,
+        };
         if (config.setWorker) {
           const worker = new Worker(
             path.resolve(__dirname, "./parseXbrlworker.js"),
@@ -245,9 +255,11 @@ router.get("/:symbolId/:maxYear?/:numOfYears?/:docType?", function (req, res) {
               return reject(new Error(`Worker stopped with exit code ${code}`));
           });
         } else {
-          parseXbrl.parseStr(dataRequest.data).then((data) => {
-            return resolve({ data, url: dataRequest.url });
-          });
+          parseXbrl
+            .parseStr(dataRequest.data, dataRequest.symbolId)
+            .then((data) => {
+              return resolve({ data, url: dataRequest.url });
+            });
         }
       })
       .catch((err) => {

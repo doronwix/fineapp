@@ -31,163 +31,169 @@ export default function FinancialData(prop) {
       <Title>Financial Data</Title>
       <Table size="small">
         <TableBody>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            BalanceShDate
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"bs_" + index}>{cell.BalanceSheetDate}</TableCell>
-          ))}
-        </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              BalanceShDate
+            </TableCell>
+            {cells.map((cell, index) => (
+              <TableCell key={"bs_" + index}>{cell.BalanceSheetDate}</TableCell>
+            ))}
+          </TableRow>
 
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            DocumentType
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"dt_" + index}>{cell.DocumentType}</TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            Equt
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"eq_" + index}>{usd(cell.Equity)}</TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            Revenue
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"rv_" + index}>{usd(cell.Revenues)}</TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            CostOfRevenue(COGS + SG&A)
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"cor_" + index}>
-              {usd(cell.CostOfRevenue)}
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              DocumentType
             </TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            % of Revenue
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"rvup_" + index}>
-              {((cell.CostOfRevenue / cell.Revenues) * 100).toFixed(1)}
+            {cells.map((cell, index) => (
+              <TableCell key={"dt_" + index}>{cell.DocumentType}</TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              Equt
             </TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            Tax
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"tax_" + index}>{usd(cell.TaxPaid)}</TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            Gross Profit
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"tax_" + index}>{usd(cell.GrossProfit)}</TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            SGandAexpenses
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"sg_" + index}>
-              {usd(cell.SGandAexpenses)}
+            {cells.map((cell, index) => (
+              <TableCell key={"eq_" + index}>{usd(cell.Equity)}</TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              Revenue
             </TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            EBITDA
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"ebt_" + index}>{usd(cell.Ebitda)}</TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            Liabil
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"lil_" + index}>{usd(cell.Liabilities)}</TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            Capex
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"cpx_" + index}>{usd(cell.Capex)}</TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            Net Income
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"nin_" + index}>
-              {usd(cell.NetIncomeLoss)}
+            {cells.map((cell, index) => (
+              <TableCell key={"rv_" + index}>{usd(cell.Revenues)}</TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              CostOfRevenue(COGS + SG&A)
             </TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            Acquisitions
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"acq_" + index}>{usd(cell.Acquisitions)}</TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            FCF
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"fcf_" + index}>{usd(cell.FCF)}</TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            no. of stocks
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"NumberOfSharesOutstanding" + index}>
-              {cell.NumberOfSharesOutstanding}
+            {cells.map((cell, index) => (
+              <TableCell key={"cor_" + index}>
+                {usd(cell.CostOfRevenue)}
+              </TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              % of Revenue
             </TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            discounted cash flow
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"cf_" + index}>
-              {usd(cell.WorkingCapital / Math.pow(1 + 0.02, index + 1))}
+            {cells.map((cell, index) => (
+              <TableCell key={"rvup_" + index}>
+                {((cell.CostOfRevenue / cell.Revenues) * 100).toFixed(1)}
+              </TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              Tax
             </TableCell>
-          ))}
-        </TableRow>
-        <TableRow>
-          <TableCell variant="head" className={classes.Head}>
-            Earning per Share
-          </TableCell>
-          {cells.map((cell, index) => (
-            <TableCell key={"cf_" + index}>{cell.EPS}</TableCell>
-          ))}
-        </TableRow>
+            {cells.map((cell, index) => (
+              <TableCell key={"tax_" + index}>{usd(cell.TaxPaid)}</TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              Gross Profit
+            </TableCell>
+            {cells.map((cell, index) => (
+              <TableCell key={"tax_" + index}>
+                {usd(cell.GrossProfit)}
+              </TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              SGandAexpenses
+            </TableCell>
+            {cells.map((cell, index) => (
+              <TableCell key={"sg_" + index}>
+                {usd(cell.SGandAexpenses)}
+              </TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              EBITDA
+            </TableCell>
+            {cells.map((cell, index) => (
+              <TableCell key={"ebt_" + index}>{usd(cell.Ebitda)}</TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              Liabil
+            </TableCell>
+            {cells.map((cell, index) => (
+              <TableCell key={"lil_" + index}>
+                {usd(cell.Liabilities)}
+              </TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              Capex
+            </TableCell>
+            {cells.map((cell, index) => (
+              <TableCell key={"cpx_" + index}>{usd(cell.Capex)}</TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              Net Income
+            </TableCell>
+            {cells.map((cell, index) => (
+              <TableCell key={"nin_" + index}>
+                {usd(cell.NetIncomeLoss)}
+              </TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              Acquisitions
+            </TableCell>
+            {cells.map((cell, index) => (
+              <TableCell key={"acq_" + index}>
+                {usd(cell.Acquisitions)}
+              </TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              FCF
+            </TableCell>
+            {cells.map((cell, index) => (
+              <TableCell key={"fcf_" + index}>{usd(cell.FCF)}</TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              no. of stocks
+            </TableCell>
+            {cells.map((cell, index) => (
+              <TableCell key={"NumberOfShares" + index}>
+                {cell.NumberOfShares}
+              </TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              discounted cash flow
+            </TableCell>
+            {cells.map((cell, index) => (
+              <TableCell key={"cf_" + index}>
+                {usd(cell.WorkingCapital / Math.pow(1 + 0.02, index + 1))}
+              </TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell variant="head" className={classes.Head}>
+              Earning per Share
+            </TableCell>
+            {cells.map((cell, index) => (
+              <TableCell key={"cf_" + index}>{cell.EPS}</TableCell>
+            ))}
+          </TableRow>
         </TableBody>
       </Table>
       <div className={classes.seeMore}>

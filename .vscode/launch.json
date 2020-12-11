@@ -1,39 +1,42 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Test DB",
+      "program": "${workspaceFolder}/db/mongoConnect.js",
+      "request": "launch",
+      "type": "node"
+    },
 
-        {
-            "name": "Python: Terminal (integrated)",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}\\index.js",
-            "runtimeArgs": [
-                "--preserve-symlinks"
-              ]
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "server",
-            "program": "${workspaceFolder}\\server.js",
- 
-        },
-        {
-            "name": "Docker Node.js Launch",
-            "type": "docker",
-            "request": "launch",
-            "preLaunchTask": "docker-run: debug",
-            "platform": "node"
-        }
-    ]
+    {
+      "name": "Python: Terminal (integrated)",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${workspaceFolder}\\index.js",
+      "runtimeArgs": ["--preserve-symlinks"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "server",
+      "program": "${workspaceFolder}\\server.js"
+    },
+    {
+      "name": "Docker Node.js Launch",
+      "type": "docker",
+      "request": "launch",
+      "preLaunchTask": "docker-run: debug",
+      "platform": "node"
+    }
+  ]
 }
